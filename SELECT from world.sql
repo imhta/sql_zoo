@@ -53,20 +53,17 @@ WHERE population>250000000 XOR area>3000000
 -- For South America show population in millions and GDP in billions both to 2 decimal places.
 -- Millions and billions
 
-
-
-
+SELECT name, ROUND(population/1000000,2), ROUND(gdp/1000000000,2)
+FROM world
+WHERE continent='South America'
 
 -- Show the name and per-capita GDP for those countries with a GDP of at least one trillion (1000000000000;
 --  that is 12 zeros). Round this value to the nearest 1000.
 
 -- Show per-capita GDP for the trillion dollar countries to the nearest $1000.
-
-
-
-
-
-
+SELECT name, ROUND((gdp/population)/1000)*1000
+FROM world
+WHERE gdp>1000000000000
 
 -- Greece has capital Athens.
 
@@ -75,14 +72,9 @@ WHERE population>250000000 XOR area>3000000
 -- Show the name and capital where the name and the capital have the same number of characters.
 
 -- You can use the LENGTH function to find the number of characters in a string
-
-
-
-
-
-
-
-
+SELECT name, capital
+FROM world
+WHERE LENGTH(name)=LENGTH(capital)
 
 -- The capital of Sweden is Stockholm. Both words start with the letter 'S'.
 
@@ -90,12 +82,9 @@ WHERE population>250000000 XOR area>3000000
 --  Don't include countries where the name and the capital are the same word.
 -- You can use the function LEFT to isolate the first character.
 -- You can use <> as the NOT EQUALS operator.
-
-
-
-
-
-
+SELECT name, capital
+FROM world
+WHERE LEFT(name,1)=LEFT(capital,1) AND name<>capital
 
 -- Equatorial Guinea and Dominican Republic have all of the vowels (a e i o u) in the name.
 -- They don't count because they have more than one word in the name.
@@ -104,3 +93,12 @@ WHERE population>250000000 XOR area>3000000
 
 -- You can use the phrase name NOT LIKE '%a%' to exclude characters from your results.
 -- The query shown misses countries like Bahamas and Belarus because they contain at least one 'a'
+
+SELECT name
+   FROM world
+WHERE name LIKE '%u%' 
+  and name LIKE '%a%' 
+  and name LIKE '%o%' 
+  and name LIKE '%i%'
+  and name LIKE '%e%'
+  and name NOT LIKE '% %'
